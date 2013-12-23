@@ -1,4 +1,4 @@
 Titres
 ======
 
-A tetris mod. 
+A Tetris mod. 
