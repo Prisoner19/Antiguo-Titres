@@ -20,19 +20,22 @@ public class sBloque : MonoBehaviour {
 	}
 
 	void seleccionarBloque(){
-		if(figuraPadre.bloqueActivo == null){
-			transform.localScale += new Vector3(0.2f,0.2f,0);
-			figuraPadre.bloqueActivo = this;
-		}
-		else{
-			figuraPadre.bloqueActivo.transform.localScale -= new Vector3(0.2f,0.2f,0);
-			if(figuraPadre.bloqueActivo != this){
-				figuraPadre.bloqueActivo = this;
+		if(figuraPadre.estado == 0){
+			if(figuraPadre.bloqueActivo == null){
 				transform.localScale += new Vector3(0.2f,0.2f,0);
+				figuraPadre.bloqueActivo = this;
 			}
 			else{
-				figuraPadre.bloqueActivo = null;
+				figuraPadre.bloqueActivo.transform.localScale -= new Vector3(0.2f,0.2f,0);
+				if(figuraPadre.bloqueActivo != this){
+					figuraPadre.bloqueActivo = this;
+					transform.localScale += new Vector3(0.2f,0.2f,0);
+				}
+				else{
+					figuraPadre.bloqueActivo = null;
+				}
 			}
 		}
 	}
+
 }
