@@ -12,7 +12,7 @@ public class sBloque : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		//sControl.getInstancia.finalSentado = false;
 	}
 
 	void OnMouseDown(){

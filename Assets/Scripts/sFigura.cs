@@ -36,6 +36,8 @@ public class sFigura : MonoBehaviour {
 		Cuadricular();
 		empezarCaida();
 		bloqueActivo = null;
+		sControl.getInstancia.finalSentado = false;
+		sControl.getInstancia.numBloques = transform.childCount;
 	}
 
 	void Awake(){
@@ -52,7 +54,6 @@ public class sFigura : MonoBehaviour {
 				detenerLados();
 				detenerCaida();
 				mostrarCuadricula();
-				Debug.Log(estado);
 			}
 			else{
 				empezarCaida();
@@ -64,7 +65,6 @@ public class sFigura : MonoBehaviour {
 
 		if(fase == ACOPLADO && estado == CONGELADO){
 			fase = ARMADO;
-			Debug.Log("asd");
 		}
 		else if(transform.position.y < GameObject.Find("Limite").transform.position.y && estado != CONGELADO){
 			fase = ACOPLADO;
@@ -206,7 +206,9 @@ public class sFigura : MonoBehaviour {
 			Destroy(clon);
 			Destroy(cuadricula);
 			Destroy(gameObject);
-			sControl.getInstancia.crearFigura();
+			sControl.getInstancia.finalSentado = true;
+
+			//sControl.getInstancia.crearFigura();
 		}
 
 	}
