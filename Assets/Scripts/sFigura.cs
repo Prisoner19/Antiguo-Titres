@@ -79,7 +79,7 @@ public class sFigura : MonoBehaviour {
 		else if(Input.GetKeyUp("a") || Input.GetKeyUp("d")){
 			if(estado != CONGELADO){
 				detenerLados();
-				clon.transform.position = new Vector3(transform.position.x, transform.position.y, 1);
+				redondearPosicionClon();
 			}
 		}
 

@@ -1,14 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\sBase.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\sControl.cs">
     <Files>
-      <File FileName="Assets\Scripts\sFigura.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\sBloque.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\sFigura.cs" Line="209" Column="46" />
+      <File FileName="Assets\Scripts\sBloque.cs" Line="15" Column="5" />
       <File FileName="Assets\Scripts\SCuad.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Antiguos\BCuadScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\sBase.cs" Line="16" Column="35" />
-      <File FileName="Assets\Scripts\sControl.cs" Line="21" Column="36" />
-      <File FileName="Assets\Scripts\Antiguos\BloqueBaseScript.cs" Line="19" Column="3" />
+      <File FileName="Assets\Scripts\sBase.cs" Line="14" Column="38" />
+      <File FileName="Assets\Scripts\sControl.cs" Line="58" Column="38" />
+      <File FileName="Assets\Scripts\Antiguos\Control.cs" Line="24" Column="4" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,7 +15,7 @@
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Scripts" expanded="True">
               <Node name="Antiguos" expanded="True" />
-              <Node name="sBase.cs" selected="True" />
+              <Node name="sControl.cs" selected="True" />
             </Node>
           </Node>
         </State>

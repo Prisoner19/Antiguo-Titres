@@ -17,7 +17,7 @@ public class sBase : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(transform.position.y + 0.25f >= GameObject.Find("Limite").transform.position.y){
+		if(transform.position.y >= GameObject.Find("Limite").transform.position.y){
 			Application.LoadLevel(Application.loadedLevel);
 		}
 	}
