@@ -48,9 +48,9 @@ public class sControl : MonoBehaviour {
 		} 
 		else{
 			if(scoreMinimo>score)
-				Debug.Log("Perdiste weon");
+				txt_timer.guiText.text = "YOU LOSE";
 			else
-				Debug.Log("Ganaste compare");
+				txt_timer.guiText.text = "YOU WIN";
 		}
 	}
 
