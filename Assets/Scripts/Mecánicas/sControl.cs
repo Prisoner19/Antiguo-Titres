@@ -4,21 +4,23 @@ using System.Collections;
 public class sControl : MonoBehaviour {
 
 	private static sControl instancia; 
+	public bool activo;
 	public GameObject[] lineas;
 	public bool finalSentado;
 	public int numBloques;
 
-	public GUIText txt_score;
-	private int score;
+	public int nivel;
 
-	public GUIText txt_timer;
+	public int score;
 	public float timer;
 
 	public int scoreMinimo;
+	public bool win;
 	
 	// Use this for initialization
 
 	void Awake(){
+
 		instancia = this;
 		lineas = new GameObject[12];
 		for(int i=0; i<12;i++){
@@ -28,32 +30,41 @@ public class sControl : MonoBehaviour {
 	}
 
 	void Start () {
+		win = false;
+		activo = true;
 		crearFigura();
 		score = 0;
-		scoreMinimo = 300;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(finalSentado){
-			for(int i=11; i>=0; i--){
-				verificarLinea(i);
+		if(activo){
+			if(finalSentado){
+				for(int i=11; i>=0; i--){
+					verificarLinea(i);
+				}
+				crearFigura();
 			}
-			crearFigura();
+
+			if(timer>=0){
+				timer -= Time.deltaTime;
+			} 
+			else{
+				terminarEscena();
+			}
+			if(score>=scoreMinimo){
+				win = true;
+				terminarEscena();
+			}
 		}
 
-		if(timer>=0){
-			timer -= Time.deltaTime;
-			txt_timer.guiText.text = timer.ToString("F1") + " Secs";
-		} 
-		else{
-			if(scoreMinimo>score)
-				txt_timer.guiText.text = "YOU LOSE";
-			else
-				txt_timer.guiText.text = "YOU WIN";
-		}
 	}
 
+	public void terminarEscena(){
+		activo = false;
+		destruirFigura();
+		StartCoroutine("mostrarResultado");
+	}
 	
 	public static sControl getInstancia{
 		get{
@@ -61,7 +72,21 @@ public class sControl : MonoBehaviour {
 		}
 	}
 
-	
+	public IEnumerator mostrarResultado(){
+		yield return new WaitForSeconds(1);
+		DontDestroyOnLoad(gameObject);
+		Application.LoadLevel("Resultado");
+	}
+
+	public void destruirFigura(){
+
+		GameObject figura = GameObject.FindGameObjectWithTag("Figura");
+		Destroy(figura);
+
+		Destroy(GameObject.Find("Cuadricula"));
+
+	}	
+
 	public void crearFigura(){
 		
 		Vector3 posInicio = new Vector3(0.25f,6.25f,0);
@@ -79,7 +104,6 @@ public class sControl : MonoBehaviour {
 			destruirLinea(row);
 			actualizarLineas(linea);
 			score += 100;
-			txt_score.guiText.text = ""+score+" Pts";
 		}
 	}
 
