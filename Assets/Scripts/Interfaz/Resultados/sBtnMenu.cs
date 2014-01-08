@@ -12,4 +12,8 @@ public class sBtnMenu : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	void OnMouseDown(){
+		Application.LoadLevel("Menu");
+	}
 }

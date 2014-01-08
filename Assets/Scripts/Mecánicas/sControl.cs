@@ -53,6 +53,7 @@ public class sControl : MonoBehaviour {
 				terminarEscena();
 			}
 			if(score>=scoreMinimo){
+				sControlSupremo.getInstancia.niveles[sControl.getInstancia.nivel] = true;
 				win = true;
 				terminarEscena();
 			}
