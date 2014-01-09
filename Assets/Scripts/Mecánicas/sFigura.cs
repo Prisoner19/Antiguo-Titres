@@ -24,7 +24,9 @@ public class sFigura : MonoBehaviour {
 
 	private GameObject cuadricula;
 	public sBloque bloqueActivo;
-	public bool chocaPared=false;
+	public bool chocaParedIzq=false;
+	public bool chocaParedDer=false;
+	public bool chocaBase=false;
 
 	// Use this for initialization
 	void Start () {
@@ -71,12 +73,13 @@ public class sFigura : MonoBehaviour {
 			fase = ACOPLADO;
 		}
 		 
-		if(Input.GetKey("a") && estado != CONGELADO && !chocaPared){
+		if(Input.GetKey("a") && estado != CONGELADO && !chocaParedDer && !chocaBase){
 			moverIzquierda();
 		}
-		else if(Input.GetKey("d") && estado != CONGELADO && !chocaPared){
+		else if(Input.GetKey("d") && estado != CONGELADO && !chocaParedIzq && !chocaBase){
 			moverDerecha();
 		}
+
 		else if(Input.GetKeyUp("a") || Input.GetKeyUp("d")){
 			if(estado != CONGELADO){
 				detenerLados();
@@ -115,6 +118,7 @@ public class sFigura : MonoBehaviour {
 		velocidad.x = -1*velX;
 		clon.rigidbody2D.velocity = velocidad;
 		estado = MOVIENDOSE;
+		Debug.Log ("izq");
 	}
 
 	void moverDerecha(){
@@ -123,7 +127,7 @@ public class sFigura : MonoBehaviour {
 		estado = MOVIENDOSE;
 	}
 
-	void detenerLados(){
+	public void detenerLados(){
 		velocidad.x = 0;
 		clon.rigidbody2D.velocity = velocidad;
 		estado = CAYENDO;
@@ -139,7 +143,7 @@ public class sFigura : MonoBehaviour {
 		clon.rigidbody2D.velocity = velocidad;
 	}
 
-	void empezarCaida(){
+	public void empezarCaida(){
 		velocidad.x = 0;
 		velocidad.y = velY;
 		clon.rigidbody2D.velocity = velocidad;
@@ -168,7 +172,7 @@ public class sFigura : MonoBehaviour {
 			clon.transform.GetChild(i).renderer.enabled = false;
 			clon.transform.GetChild(i).collider2D.isTrigger = false;
 			Destroy(clon.transform.GetChild(i).GetComponent("sBloque"));
-			clon.transform.GetChild(i).gameObject.AddComponent("sPrueba");
+			clon.transform.GetChild(i).gameObject.AddComponent("sBloqueClon");
 			col = clon.transform.GetChild(i).GetComponent("BoxCollider2D") as BoxCollider2D;
 			col.size = new Vector2(0.45f,0.45f);
 		}
@@ -198,6 +202,7 @@ public class sFigura : MonoBehaviour {
 
 	public void asentar(){
 		if(estado != ASENTADO){
+			actualizarPosicionClon();
 			estado = ASENTADO;
 			pos = transform.position;
 			pos.y = Mathf.Round((pos.y - 0.25f)*2) /2 + 0.25f;
@@ -211,6 +216,8 @@ public class sFigura : MonoBehaviour {
 			Destroy(cuadricula);
 			Destroy(gameObject);
 			sControl.getInstancia.finalSentado = true;
+			sBloqueClon.colision=false;
+			sPared.trigger=false;
 
 			//sControl.getInstancia.crearFigura();
 		}
@@ -304,7 +311,7 @@ public class sFigura : MonoBehaviour {
 		}
 	}
 
-	void redondearPosicionClon(){
+	public void redondearPosicionClon(){
 		Vector3 posAux;
 
 		posAux = transform.position;
