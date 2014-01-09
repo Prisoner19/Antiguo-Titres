@@ -24,6 +24,7 @@ public class sFigura : MonoBehaviour {
 
 	private GameObject cuadricula;
 	public sBloque bloqueActivo;
+	public bool chocaPared=false;
 
 	// Use this for initialization
 	void Start () {
@@ -70,10 +71,10 @@ public class sFigura : MonoBehaviour {
 			fase = ACOPLADO;
 		}
 		 
-		if(Input.GetKey("a") && estado != CONGELADO){
+		if(Input.GetKey("a") && estado != CONGELADO && !chocaPared){
 			moverIzquierda();
 		}
-		else if(Input.GetKey("d") && estado != CONGELADO){
+		else if(Input.GetKey("d") && estado != CONGELADO && !chocaPared){
 			moverDerecha();
 		}
 		else if(Input.GetKeyUp("a") || Input.GetKeyUp("d")){
@@ -153,6 +154,8 @@ public class sFigura : MonoBehaviour {
 		clon = Instantiate(Resources.Load("Prefabs/"+name), posClon, transform.rotation) as GameObject;
 		clon.name = "Clon";
 		Destroy(clon.GetComponent("sFigura"));
+		clon.AddComponent("sClon");
+		clon.GetComponent<sClon> ().figura = this.gameObject;
 		clon.AddComponent("Rigidbody2D");
 		clon.rigidbody2D.gravityScale = 0;
 		clon.rigidbody2D.fixedAngle = true;
@@ -165,6 +168,7 @@ public class sFigura : MonoBehaviour {
 			clon.transform.GetChild(i).renderer.enabled = false;
 			clon.transform.GetChild(i).collider2D.isTrigger = false;
 			Destroy(clon.transform.GetChild(i).GetComponent("sBloque"));
+			clon.transform.GetChild(i).gameObject.AddComponent("sPrueba");
 			col = clon.transform.GetChild(i).GetComponent("BoxCollider2D") as BoxCollider2D;
 			col.size = new Vector2(0.45f,0.45f);
 		}

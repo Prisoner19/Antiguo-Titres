@@ -1,18 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Mecánicas\sFigura.cs">
     <Files>
-      <File FileName="Assets\Scripts\Interfaz\Resultados\sWin.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Interfaz\Resultados\sResultado.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Interfaz\Resultados\sLose.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Mecánicas\sControl.cs" Line="56" Column="69" />
-      <File FileName="Assets\Scripts\Mecánicas\sBase.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Interfaz\Pantallas\sOptions.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Interfaz\Pantallas\sPlay.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Interfaz\Pantallas\sTitulo.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Interfaz\Pantallas\sControlSupremo.cs" Line="16" Column="33" />
-      <File FileName="Assets\Scripts\Interfaz\Pantallas\sLevelBox.cs" Line="36" Column="1" />
-      <File FileName="Assets\Scripts\Mecánicas\sFigura.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Mecánicas\sFigura.cs" Line="157" Column="36" />
+      <File FileName="Assets\Scripts\Mecánicas\sPrueba.cs" Line="43" Column="5" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
