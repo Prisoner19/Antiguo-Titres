@@ -57,7 +57,14 @@ public class sBloqueClon : MonoBehaviour {
 	}
 
 	IEnumerator cambiarFlagEnClonPadre(){
+		sFigura temp = (sFigura)this.transform.parent.GetComponent<sClon> ().figura.GetComponent<sFigura> ();
+
 		yield return new WaitForSeconds (0.5f);
-		this.transform.parent.GetComponent<sClon>().figura.GetComponent<sFigura>().chocaBase=true;
+
+		temp.chocaBase=true;
+		sBloqueClon.colision=false;
+		sPared.trigger=false;
+		temp.chocaParedDer=false;
+		temp.chocaParedIzq=false;
 	}
 }

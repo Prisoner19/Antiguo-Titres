@@ -18,18 +18,18 @@ public class sPared : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		if (!trigger) {
 			if(other.name == "B1" || other.name == "B2" || other.name == "B3" || other.name == "B4"){
-				sFigura sf= other.transform.parent.GetComponent<sClon>().figura.GetComponent<sFigura>();
-				if(sf!=null){
-					if(this.name == "ParedIzq")
-						sf.chocaParedIzq=true;
-					else if(this.name == "ParedDer")
-						sf.chocaParedDer=true;
-					sf.detenerLados();
-					sf.redondearPosicionClon();
-					sf.empezarCaida();
+				if(other!=null){
+					sFigura sf= other.transform.parent.GetComponent<sClon>().figura.GetComponent<sFigura>();
+					if(sf!=null){
+						if(this.name == "ParedIzq")
+							sf.chocaParedIzq=true;
+						else if(this.name == "ParedDer")
+							sf.chocaParedDer=true;
+						sf.detenerLados();
+						sf.redondearPosicionClon();
+						sf.empezarCaida();
+					}
 				}
-				Debug.Log("pared");
-
 			}
 			trigger=true;
 		}

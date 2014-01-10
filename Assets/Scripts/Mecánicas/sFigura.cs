@@ -49,9 +49,9 @@ public class sFigura : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		Debug.Log (chocaParedDer);
 		cuadricula.transform.position = transform.position - posInicioCuad;
-	
+
 		if(fase == ARMADO && Input.GetButtonDown("Jump")){
 			if(estado != CONGELADO){
 				detenerLados();
@@ -118,7 +118,6 @@ public class sFigura : MonoBehaviour {
 		velocidad.x = -1*velX;
 		clon.rigidbody2D.velocity = velocidad;
 		estado = MOVIENDOSE;
-		Debug.Log ("izq");
 	}
 
 	void moverDerecha(){
@@ -216,8 +215,6 @@ public class sFigura : MonoBehaviour {
 			Destroy(cuadricula);
 			Destroy(gameObject);
 			sControl.getInstancia.finalSentado = true;
-			sBloqueClon.colision=false;
-			sPared.trigger=false;
 
 			//sControl.getInstancia.crearFigura();
 		}
