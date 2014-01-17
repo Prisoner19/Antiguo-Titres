@@ -3,10 +3,11 @@ using System.Collections;
 
 public class sBloqueClon : MonoBehaviour {
 
-	public bool colision;
+	public static bool colision=false;
+
 	// Use this for initialization
 	void Start () {
-		colision = transform.parent.GetComponent<sClon> ().colision;	
+		
 	}
 	
 	// Update is called once per frame
@@ -37,37 +38,33 @@ public class sBloqueClon : MonoBehaviour {
 	}*/
 	
 	void OnCollisionEnter2D(Collision2D coll) {
-		if(coll.collider.name == "Bloque" ){
-			if (!colision ) {
+		if (!colision) {
+			if(coll.collider.name == "Bloque"){
 				StartCoroutine("cambiarFlagEnClonPadre");
+				Debug.Log("bloque");
 			}
 			colision=true;
 		}
 	}
 	
 	void OnCollisionExit2D(Collision2D coll) {
-		if(coll.collider.name == "Bloque"){
-			if (colision) {
-					if(this!=null)
-						this.transform.parent.GetComponent<sClon>().figura.GetComponent<sFigura>().chocaBase=false;
-				}
+		if (colision) {
+			if(coll.collider.name == "Bloque"){
+				this.transform.parent.GetComponent<sClon>().figura.GetComponent<sFigura>().chocaBase=false;
+			}
 			colision=false;
 		}
 	}
 
 	IEnumerator cambiarFlagEnClonPadre(){
-		if (this != null) {
-			sFigura temp = (sFigura)this.transform.parent.GetComponent<sClon> ().figura.GetComponent<sFigura> ();
+		sFigura temp = (sFigura)this.transform.parent.GetComponent<sClon> ().figura.GetComponent<sFigura> ();
 
-			yield return new WaitForSeconds (0.3f);
-			temp.chocaBase = true;
-			sPared.trigger = false;
-			temp.chocaParedDer = false;
-			temp.chocaParedIzq = false;
-		}
-	}
+		yield return new WaitForSeconds (0.5f);
 
-	void Destroy(){
-		StopAllCoroutines ();
+		temp.chocaBase=true;
+		sBloqueClon.colision=false;
+		sPared.trigger=false;
+		temp.chocaParedDer=false;
+		temp.chocaParedIzq=false;
 	}
 }

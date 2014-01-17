@@ -4,7 +4,6 @@ using System.Collections;
 public class sClon : MonoBehaviour {
 
 	public GameObject figura;
-	public bool colision=false;
 	// Use this for initialization
 	void Start () {
 	

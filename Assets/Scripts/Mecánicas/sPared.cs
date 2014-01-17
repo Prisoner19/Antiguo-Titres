@@ -16,10 +16,9 @@ public class sPared : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		if(other.name == "B1" || other.name == "B2" || other.name == "B3" || other.name == "B4"){
-			if (!trigger) {
-
-				if(other!=null && other.transform.parent!=null){
+		if (!trigger) {
+			if(other.name == "B1" || other.name == "B2" || other.name == "B3" || other.name == "B4"){
+				if(other!=null){
 					sFigura sf= other.transform.parent.GetComponent<sClon>().figura.GetComponent<sFigura>();
 					if(sf!=null){
 						if(this.name == "ParedIzq")
@@ -37,17 +36,15 @@ public class sPared : MonoBehaviour {
 	}
 	
 	void OnTriggerExit2D(Collider2D other) {
-		if (other.name == "B1" || other.name == "B2" || other.name == "B3" || other.name == "B4") {
-				if (trigger) {
-						sFigura sf = other.transform.parent.GetComponent<sClon> ().figura.GetComponent<sFigura> ();
-						if (sf != null) {
-								if (this.name == "ParedIzq")
-										sf.chocaParedIzq = false;
-								else if (this.name == "ParedDer")
-										sf.chocaParedDer = false;
-						}
-						trigger = false;
-				}
+		if (trigger) {
+			sFigura sf= other.transform.parent.GetComponent<sClon>().figura.GetComponent<sFigura>();
+			if(sf!=null){
+				if(this.name == "ParedIzq")
+					sf.chocaParedIzq=false;
+				else if(this.name == "ParedDer")
+					sf.chocaParedDer=false;
+			}
+			trigger=false;
 		}
 	}
 }

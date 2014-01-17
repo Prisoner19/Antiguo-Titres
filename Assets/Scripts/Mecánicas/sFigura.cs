@@ -3,7 +3,7 @@ using System.Collections;
 
 public class sFigura : MonoBehaviour {
 
-	public GameObject clon;
+	private GameObject clon;
 	private Vector3 pos;
 	private Vector3 velocidad;
 	private Vector3 posInicioCuad;
@@ -49,7 +49,7 @@ public class sFigura : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		Debug.Log (chocaParedDer);
 		cuadricula.transform.position = transform.position - posInicioCuad;
 
 		if(fase == ARMADO && Input.GetButtonDown("Jump")){
@@ -69,7 +69,7 @@ public class sFigura : MonoBehaviour {
 		if(fase == ACOPLADO && estado == CONGELADO){
 			fase = ARMADO;
 		}
-		else if(transform.position.y < GameObject.Find("Limite").transform.position.y && estado != CONGELADO ){
+		else if(transform.position.y < GameObject.Find("Limite").transform.position.y && estado != CONGELADO){
 			fase = ACOPLADO;
 		}
 		 
@@ -100,7 +100,7 @@ public class sFigura : MonoBehaviour {
 		//pos.y = Mathf.Round((pos.y - 0.25f)*2) /2 + 0.25f;
 		transform.position = pos;
 
-		if(clon.rigidbody2D.velocity.y == 0 && estado != CONGELADO  &&chocaBase){
+		if(clon.rigidbody2D.velocity.y == 0 && estado != CONGELADO){
 			clon.transform.position = pos;
 			//clon.rigidbody2D.velocity = Vector3.down * 5;
 			StartCoroutine("verificarFijo");
@@ -210,6 +210,7 @@ public class sFigura : MonoBehaviour {
 			clon.transform.position = pos;
 
 			removerHijos();
+
 			Destroy(clon);
 			Destroy(cuadricula);
 			Destroy(gameObject);
@@ -226,11 +227,11 @@ public class sFigura : MonoBehaviour {
 
 		for(int i = transform.childCount-1; i >= 0; i--){
 			hijo = transform.GetChild(i);
+			hijo.collider2D.isTrigger = false;
 			hijo.parent = null;
 			hijo.parent = GameObject.Find("Base").transform;
 			hijo.gameObject.AddComponent("sBase");
 			hijo.name = "Bloque";
-			hijo.collider2D.isTrigger = false;
 			Destroy(hijo.GetComponent("sBloque"));
 			col = hijo.GetComponent("BoxCollider2D") as BoxCollider2D;
 			col.size = new Vector2(0.45f,0.45f);
@@ -313,9 +314,5 @@ public class sFigura : MonoBehaviour {
 		posAux = transform.position;
 		posAux.z = 1;
 		clon.transform.position = posAux;
-	}
-
-	void Destroy(){
-		StopAllCoroutines ();
 	}
 }
