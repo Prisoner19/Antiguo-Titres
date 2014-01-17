@@ -3,7 +3,7 @@ using System.Collections;
 
 public class sFigura : MonoBehaviour {
 
-	private GameObject clon;
+	public GameObject clon;
 	private Vector3 pos;
 	private Vector3 velocidad;
 	private Vector3 posInicioCuad;
@@ -24,19 +24,12 @@ public class sFigura : MonoBehaviour {
 
 	private GameObject cuadricula;
 	public sBloque bloqueActivo;
+	public bool chocaParedIzq=false;
+	public bool chocaParedDer=false;
+	public bool chocaBase=false;
 
 	// Use this for initialization
 	void Start () {
-
-		switch(sControl.getInstancia.nivel){
-
-			case 1: velY = 3; break;
-			case 2: velY = 3; break;
-			case 3: velY = 4; break;
-			default: velY = 5; break;
-
-		}
-	
 		velY *= -1;
 		fase = ARMADO;
 		finalSentado = false;
@@ -56,9 +49,9 @@ public class sFigura : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 		cuadricula.transform.position = transform.position - posInicioCuad;
-	
+
 		if(fase == ARMADO && Input.GetButtonDown("Jump")){
 			if(estado != CONGELADO){
 				detenerLados();
@@ -76,16 +69,17 @@ public class sFigura : MonoBehaviour {
 		if(fase == ACOPLADO && estado == CONGELADO){
 			fase = ARMADO;
 		}
-		else if(transform.position.y < GameObject.Find("Limite").transform.position.y && estado != CONGELADO){
+		else if(transform.position.y < GameObject.Find("Limite").transform.position.y && estado != CONGELADO ){
 			fase = ACOPLADO;
 		}
 		 
-		if(Input.GetKey("a") && estado != CONGELADO){
+		if(Input.GetKey("a") && estado != CONGELADO && !chocaParedDer && !chocaBase){
 			moverIzquierda();
 		}
-		else if(Input.GetKey("d") && estado != CONGELADO){
+		else if(Input.GetKey("d") && estado != CONGELADO && !chocaParedIzq && !chocaBase){
 			moverDerecha();
 		}
+
 		else if(Input.GetKeyUp("a") || Input.GetKeyUp("d")){
 			if(estado != CONGELADO){
 				detenerLados();
@@ -106,7 +100,7 @@ public class sFigura : MonoBehaviour {
 		//pos.y = Mathf.Round((pos.y - 0.25f)*2) /2 + 0.25f;
 		transform.position = pos;
 
-		if(clon.rigidbody2D.velocity.y == 0 && estado != CONGELADO){
+		if(clon.rigidbody2D.velocity.y == 0 && estado != CONGELADO  &&chocaBase){
 			clon.transform.position = pos;
 			//clon.rigidbody2D.velocity = Vector3.down * 5;
 			StartCoroutine("verificarFijo");
@@ -132,7 +126,7 @@ public class sFigura : MonoBehaviour {
 		estado = MOVIENDOSE;
 	}
 
-	void detenerLados(){
+	public void detenerLados(){
 		velocidad.x = 0;
 		clon.rigidbody2D.velocity = velocidad;
 		estado = CAYENDO;
@@ -148,7 +142,7 @@ public class sFigura : MonoBehaviour {
 		clon.rigidbody2D.velocity = velocidad;
 	}
 
-	void empezarCaida(){
+	public void empezarCaida(){
 		velocidad.x = 0;
 		velocidad.y = velY;
 		clon.rigidbody2D.velocity = velocidad;
@@ -163,6 +157,8 @@ public class sFigura : MonoBehaviour {
 		clon = Instantiate(Resources.Load("Prefabs/"+name), posClon, transform.rotation) as GameObject;
 		clon.name = "Clon";
 		Destroy(clon.GetComponent("sFigura"));
+		clon.AddComponent("sClon");
+		clon.GetComponent<sClon> ().figura = this.gameObject;
 		clon.AddComponent("Rigidbody2D");
 		clon.rigidbody2D.gravityScale = 0;
 		clon.rigidbody2D.fixedAngle = true;
@@ -175,6 +171,7 @@ public class sFigura : MonoBehaviour {
 			clon.transform.GetChild(i).renderer.enabled = false;
 			clon.transform.GetChild(i).collider2D.isTrigger = false;
 			Destroy(clon.transform.GetChild(i).GetComponent("sBloque"));
+			clon.transform.GetChild(i).gameObject.AddComponent("sBloqueClon");
 			col = clon.transform.GetChild(i).GetComponent("BoxCollider2D") as BoxCollider2D;
 			col.size = new Vector2(0.45f,0.45f);
 		}
@@ -204,6 +201,7 @@ public class sFigura : MonoBehaviour {
 
 	public void asentar(){
 		if(estado != ASENTADO){
+			actualizarPosicionClon();
 			estado = ASENTADO;
 			pos = transform.position;
 			pos.y = Mathf.Round((pos.y - 0.25f)*2) /2 + 0.25f;
@@ -212,7 +210,6 @@ public class sFigura : MonoBehaviour {
 			clon.transform.position = pos;
 
 			removerHijos();
-
 			Destroy(clon);
 			Destroy(cuadricula);
 			Destroy(gameObject);
@@ -229,11 +226,11 @@ public class sFigura : MonoBehaviour {
 
 		for(int i = transform.childCount-1; i >= 0; i--){
 			hijo = transform.GetChild(i);
-			hijo.collider2D.isTrigger = false;
 			hijo.parent = null;
 			hijo.parent = GameObject.Find("Base").transform;
 			hijo.gameObject.AddComponent("sBase");
 			hijo.name = "Bloque";
+			hijo.collider2D.isTrigger = false;
 			Destroy(hijo.GetComponent("sBloque"));
 			col = hijo.GetComponent("BoxCollider2D") as BoxCollider2D;
 			col.size = new Vector2(0.45f,0.45f);
@@ -310,11 +307,15 @@ public class sFigura : MonoBehaviour {
 		}
 	}
 
-	void redondearPosicionClon(){
+	public void redondearPosicionClon(){
 		Vector3 posAux;
 
 		posAux = transform.position;
 		posAux.z = 1;
 		clon.transform.position = posAux;
+	}
+
+	void Destroy(){
+		StopAllCoroutines ();
 	}
 }

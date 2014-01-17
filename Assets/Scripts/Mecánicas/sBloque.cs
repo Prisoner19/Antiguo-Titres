@@ -4,29 +4,10 @@ using System.Collections;
 public class sBloque : MonoBehaviour {
 
 	public sFigura figuraPadre;
-	public Sprite spriteMadera;
-	public Sprite spriteMetal;
-	public int tipo;
-	private SpriteRenderer rend;
-
-	private const int MADERA = 1;
-	private const int METAL = 2;
 
 	// Use this for initialization
 	void Start () {
-		tipo = MADERA;
-		if(sControl.getInstancia.nivel>5){
-			rend = GetComponent("SpriteRenderer") as SpriteRenderer;
-			int random = Random.Range(1,11);
-			if(random<9){
-				tipo = MADERA;
-				rend.sprite = spriteMadera;
-			}
-			else{
-				tipo = METAL;
-				rend.sprite = spriteMetal;
-			}
-		}
+	
 	}
 	
 	// Update is called once per frame
@@ -35,9 +16,7 @@ public class sBloque : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
-		if(tipo == MADERA){
-			seleccionarBloque();
-		}
+		seleccionarBloque();
 	}
 
 	void seleccionarBloque(){

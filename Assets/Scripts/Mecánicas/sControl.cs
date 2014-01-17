@@ -4,7 +4,6 @@ using System.Collections;
 public class sControl : MonoBehaviour {
 
 	private static sControl instancia; 
-	public sFX efectos;
 	public bool activo;
 	public GameObject[] lineas;
 	public bool finalSentado;
@@ -14,15 +13,10 @@ public class sControl : MonoBehaviour {
 
 	public int score;
 	public float timer;
-	private float tiempoInicial;
 
 	public int scoreMinimo;
-
-	public int scoreMeta;
-	public float tiempoMeta;
-
 	public bool win;
-	public int combos;
+	
 	// Use this for initialization
 
 	void Awake(){
@@ -40,25 +34,16 @@ public class sControl : MonoBehaviour {
 		activo = true;
 		crearFigura();
 		score = 0;
-		tiempoInicial = timer;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if(activo){
 			if(finalSentado){
-				combos=0;
 				for(int i=11; i>=0; i--){
 					verificarLinea(i);
 				}
 				crearFigura();
-				switch(combos){
-					case 2: score+=50; break;
-					case 3: score+=100; break;
-					case 4: score+=200; break;
-				}
-				efectos.efectoCombo(combos);
-				Debug.Log(combos);
 			}
 
 			if(timer>=0){
@@ -70,13 +55,6 @@ public class sControl : MonoBehaviour {
 			if(score>=scoreMinimo){
 				sControlSupremo.getInstancia.niveles[sControl.getInstancia.nivel] = true;
 				win = true;
-				sControlSupremo.getInstancia.metas[nivel-1,0] = true;
-				if(score>=scoreMeta)
-					sControlSupremo.getInstancia.metas[nivel-1,2] = true;
-
-				if(tiempoMeta>=tiempoInicial-timer)
-					sControlSupremo.getInstancia.metas[nivel-1,1] = true;
-
 				terminarEscena();
 			}
 		}
@@ -127,7 +105,6 @@ public class sControl : MonoBehaviour {
 			destruirLinea(row);
 			actualizarLineas(linea);
 			score += 100;
-			combos++;
 		}
 	}
 

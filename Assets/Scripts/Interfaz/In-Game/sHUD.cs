@@ -16,8 +16,7 @@ public class sHUD : MonoBehaviour {
 	void Update () {
 		if(sControl.getInstancia.activo){
 			if(sControl.getInstancia.timer>=0){
-				if(sControl.getInstancia.nivel != 1)
-					txt_timer.guiText.text = sControl.getInstancia.timer.ToString("F1") + " Secs";
+				txt_timer.guiText.text = sControl.getInstancia.timer.ToString("F1") + " Secs";
 			} 
 			else{
 				if(sControl.getInstancia.scoreMinimo > sControl.getInstancia.score)
