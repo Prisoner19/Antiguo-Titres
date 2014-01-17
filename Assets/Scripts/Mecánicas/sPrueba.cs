@@ -3,8 +3,6 @@ using System.Collections;
 
 public class sPrueba : MonoBehaviour {
 
-	public static bool colision=false;
-	private static bool trigger=false;
 	// Use this for initialization
 	void Start () {
 	
@@ -18,5 +16,4 @@ public class sPrueba : MonoBehaviour {
 	void OnMouseDown(){
 		Debug.Log("En clon");
 	}
-
 }
